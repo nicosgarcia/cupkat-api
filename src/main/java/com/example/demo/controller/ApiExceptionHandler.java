@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import com.example.demo.exception.NegocioException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -17,5 +18,11 @@ public class ApiExceptionHandler {
           .forEach(e -> campos.putIfAbsent(e.getField(), e.getDefaultMessage()));
         return ResponseEntity.badRequest()
                 .body(Map.of("mensagem", "Dados inválidos.", "campos", campos));
+    }
+
+    @ExceptionHandler(NegocioException.class)
+    public ResponseEntity<Map<String, String>> negocio(NegocioException ex) {
+        return ResponseEntity.status(ex.getStatus())
+                .body(Map.of("mensagem", ex.getMessage()));
     }
 }
