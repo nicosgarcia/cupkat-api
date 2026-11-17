@@ -47,7 +47,8 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(a -> a
-                .requestMatchers(HttpMethod.POST, "/api/auth/cadastro", "/api/auth/login").permitAll()
+            	.requestMatchers(HttpMethod.POST, "/api/auth/cadastro", "/api/auth/login",
+            			"/api/auth/esqueci-senha", "/api/auth/redefinir-senha").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/produtos", "/api/produtos/**").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated())
